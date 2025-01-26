@@ -48,8 +48,8 @@ jobs:
         
         # Add remote for Azure storage
         dvc remote add -d azure_remote_mlps azure://dvcstorage/data
-        dvc remote modify azure_remote_mlps azure_account_name $AZURE_STORAGE_ACCOUNT
-        dvc remote modify azure_remote_mlps azure_account_key $AZURE_STORAGE_KEY    
+        dvc remote modify azure_remote_mlps account_name $AZURE_STORAGE_ACCOUNT
+        dvc remote modify azure_remote_mlps account_key $AZURE_STORAGE_KEY    
 
     # Step 5: Pull DVC data
     - name: Pull DVC data
