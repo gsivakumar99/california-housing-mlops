@@ -8,6 +8,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    continue-on-error: false
 
     steps:
     # Step 1: Checkout the code
@@ -25,6 +26,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
+    # Ensure the directory is initialized as a DVC repository
+    - name: Initialize DVC repository
+      run: |
+        git init  # Initialize Git repo (if not done yet)
+        dvc init  # Initialize DVC repo
 
     # Step 4: Configure DVC and Azure credentials
     - name: Configure DVC with Azure
