@@ -8,42 +8,52 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    continue-on-error: false
-
+    
     steps:
     # Step 1: Checkout the code
     - name: Checkout code
+      continue-on-error: false
       uses: actions/checkout@v3
 
     # Step 2: Set up Python
     - name: Set up Python
       uses: actions/setup-python@v4
+      continue-on-error: false
       with:
         python-version: 3.12
 
     # Step 3: Install dependencies
     - name: Install dependencies
+      continue-on-error: false
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
     # Ensure the directory is initialized as a DVC repository
     - name: Initialize DVC repository
+      continue-on-error: false
       run: |
         git init  # Initialize Git repo (if not done yet)
-        dvc init  # Initialize DVC repo    
+        dvc init  # Initialize DVC repo   
 
-    # Step 4: Configure DVC and Azure credentials
+    # Step 4: Configure DVC with Azure
     - name: Configure DVC with Azure
+      continue-on-error: false
       env:
         AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
         AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
       run: |
         dvc version
         echo "Azure credentials set up."
+        
+        # Add remote for Azure storage
+        dvc remote add -d azure_remote_mlps azure://dvcstorage/data
+        dvc remote modify azure_remote_mlps azure_account_name $AZURE_STORAGE_ACCOUNT
+        dvc remote modify azure_remote_mlps azure_account_key $AZURE_STORAGE_KEY    
 
     # Step 5: Pull DVC data
     - name: Pull DVC data
+      continue-on-error: false
       env:
         AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
         AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
@@ -54,6 +64,7 @@ jobs:
     # Step 7: Push changes to DVC (if needed)
     - name: Push DVC changes
       if: github.ref == 'refs/heads/master'
+      continue-on-error: false
       env:
         AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
         AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
