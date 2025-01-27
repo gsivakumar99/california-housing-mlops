@@ -2,5 +2,3 @@
     remote = azure_remote_mlps
 ['remote "azure_remote_mlps"']
     url = azure://dvcstorage/data
-    account_name = mlopsdvcstorage
-    account_key = 8Wp1xMEEZbxUtR5gUTLkk9OUXUYPIEeON6Mkl+gvucNAelEUKssoH5qI5H0DHg9WWPxaloIJuLER+AStRnt/VQ==
