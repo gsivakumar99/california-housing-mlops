@@ -1,15 +1,10 @@
 import pandas as pd
-from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 
-
-def load_data():
-    # Load California Housing dataset
-    housing = fetch_california_housing()
-    df = pd.DataFrame(housing.data, columns=housing.feature_names)
-    df['PRICE'] = housing.target
+def load_data(file_name=r'./data/california_housing.csv'):
+    # Load California Housing dataset from CSV
+    df = pd.read_csv(file_name)
     return df
-
 
 def preprocess_data(df):
     X = df.drop('PRICE', axis=1)
