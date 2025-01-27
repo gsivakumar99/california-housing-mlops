@@ -1,0 +1,4 @@
+[core]
+    remote = azure_remote_mlps
+['remote "azure_remote_mlps"']
+    url = azure://dvcstorage/data
