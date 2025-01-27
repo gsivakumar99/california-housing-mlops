@@ -39,8 +39,7 @@ jobs:
         dvc version
         echo "Azure credentials set up."
         
-        # Add remote for Azure storage
-        dvc remote add -d azure_remote_mlps azure://dvcstorage/data
+        # Add remote for Azure storage        
         dvc remote modify azure_remote_mlps account_name $AZURE_STORAGE_ACCOUNT
         dvc remote modify azure_remote_mlps account_key $AZURE_STORAGE_KEY    
 
