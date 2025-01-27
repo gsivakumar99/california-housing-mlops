@@ -29,13 +29,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
-    # Ensure the directory is initialized as a DVC repository
-    - name: Initialize DVC repository
-      continue-on-error: false
-      run: |
-        git init  # Initialize Git repo (if not done yet)
-        dvc init  # Initialize DVC repo   
-
     # Step 4: Configure DVC with Azure
     - name: Configure DVC with Azure
       continue-on-error: false
@@ -61,14 +54,3 @@ jobs:
         dvc pull
         ls -lh data/
         echo "DVC data pulled successfully."
-
-    # Step 7: Push changes to DVC (if needed)
-    - name: Push DVC changes
-      if: github.ref == 'refs/heads/master'
-      continue-on-error: false
-      env:
-        AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
-        AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
-      run: |
-        dvc push
-        echo "DVC data pushed successfully."
